@@ -49,7 +49,13 @@ def process():
         for matchNum, match in enumerate(matches, start=1):
     
             out = "Match {matchNum} was found at {start}-{end}: {match}".format(matchNum = matchNum, start = match.start(), end = match.end(), match = match.group())
-            results.append({'verbose': out, 'start': match.start(), 'matchNum': matchNum,'end': match.end(), 'match': match.group()})
+            results.append({
+                'verbose': out,
+                'matchNum': matchNum,
+                'match': match.group(),
+                'start': match.start(),
+                'end': match.end()
+                })
     
         return json.dumps(results), 200
 
@@ -63,7 +69,6 @@ if __name__ == '__main__':
     global regex
 
     regex = re.compile(r'[\w\-][\w\-\.]+@[\w\-][\w\-\.]+[a-zA-Z]', re.IGNORECASE|re.MULTILINE)
-    #mail_regex = re.compile(r'[\w\.-]+@[\w\.-]+')
 
 
     port = 5000

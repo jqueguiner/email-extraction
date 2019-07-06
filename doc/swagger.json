@@ -1,0 +1,113 @@
+{
+    "components": {
+        "schemas": {
+            "Body": {
+                "properties": {
+                    "text": {
+                        "description": "text from which emails needs to be extracted",
+                        "example": "lorem ipsum linuxhack@att.net lorem ipsum fwitness@me.com",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "text"
+                ],
+                "type": "object"
+            },
+            "Response": {
+                "properties": {
+                    "end": {
+                        "description": "position of the last character of the email found",
+                        "example": "29",
+                        "type": "number"
+                    },
+                    "match": {
+                        "description": "email found",
+                        "example": "linuxhack@att.net",
+                        "type": "string"
+                    },
+                    "matchNum": {
+                        "description": "index of the email found",
+                        "example": "1",
+                        "type": "number"
+                    },
+                    "start": {
+                        "description": "position of the first character of the email found",
+                        "example": "12",
+                        "type": "number"
+                    },
+                    "verbose": {
+                        "description": "verbose of the email found",
+                        "example": "Match 1 was found at 12-29: linuxhack@att.net",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "apikey": {
+                "in": "header",
+                "name": "X-OVH-Api-Key",
+                "type": "apiKey"
+            }
+        }
+    },
+    "info": {
+        "description": "This service will extract emails found in the given text",
+        "title": "email extraction",
+        "version": "1.0.0"
+    },
+    "openapi": "3.0.1",
+    "paths": {
+        "/detect": {
+            "post": {
+                "description": "This service will extract emails found in the given text",
+                "operationId": "detect",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body"
+                            }
+                        }
+                    },
+                    "description": "extract emails from a given text",
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Response"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apikey": []
+                    }
+                ],
+                "summary": "extract emails from a given text",
+                "tags": [
+                    "detect"
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "description": "This service will extract emails found in the given text",
+            "name": "detect"
+        }
+    ]
+}
