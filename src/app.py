@@ -37,7 +37,7 @@ app = Flask(__name__)
 
 
 @app.route("/detect", methods=["POST"])
-def process():
+def detect():
 
     try:
         text = request.json["text"]
